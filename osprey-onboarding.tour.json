@@ -22,16 +22,14 @@
       "title": "Compiler Entry Point",
       "description": "The Osprey CLI entry point wires up the full pipeline: parse the source, build an AST, infer types, emit LLVM IR, then either JIT or produce a binary. A top-level build script orchestrates build, test, and install.",
       "estimatedTime": 90,
-      "focusDirectory": "compiler",
+      "focusDirectory": "compiler/cmd",
       "highlightLayers": [
         {
           "id": "entry-and-build",
-          "name": "Entry & Build",
+          "name": "CLI Entry",
           "color": "#10b981",
           "items": [
-            { "path": "compiler/cmd", "type": "directory" },
-            { "path": "compiler/Makefile", "type": "file" },
-            { "path": "compiler/go.mod", "type": "file" }
+            { "path": "compiler/cmd", "type": "directory" }
           ],
           "opacity": 0.75,
           "renderStrategy": "border"
@@ -44,16 +42,14 @@
       "title": "Grammar & Parser",
       "description": "Osprey's syntax is defined by an ANTLR4 grammar. Generated parser sources sit alongside the grammar, and grammar changes flow through a dedicated regeneration step before the rest of the pipeline sees them.",
       "estimatedTime": 90,
-      "focusDirectory": "compiler",
+      "focusDirectory": "compiler/parser",
       "highlightLayers": [
         {
           "id": "frontend-grammar",
-          "name": "Grammar & Generated Parser",
+          "name": "Generated Parser",
           "color": "#a855f7",
           "items": [
-            { "path": "compiler/osprey.g4", "type": "file" },
-            { "path": "compiler/parser", "type": "directory" },
-            { "path": "compiler/spec", "type": "directory" }
+            { "path": "compiler/parser", "type": "directory" }
           ],
           "opacity": 0.7,
           "renderStrategy": "border"
