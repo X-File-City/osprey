@@ -1,0 +1,280 @@
+{
+  "id": "osprey-onboarding",
+  "title": "Osprey Compiler Onboarding",
+  "description": "Guided walkthrough of the Osprey language compiler: a functional language with algebraic effects, fiber concurrency, and LLVM codegen.",
+  "version": "1.0.0",
+  "audience": "New Contributors",
+  "prerequisites": [
+    "Familiarity with Go and compiler basics",
+    "Optional: exposure to LLVM IR and ANTLR"
+  ],
+  "steps": [
+    {
+      "id": "step-1-repo-overview",
+      "title": "Repository Overview",
+      "description": "Osprey is a multi-package monorepo. The core compiler sits alongside surrounding tooling for editor support, documentation, browser-based compilation, and distribution.",
+      "estimatedTime": 60,
+      "focusDirectory": "",
+      "highlightLayers": [
+        {
+          "id": "top-level-packages",
+          "name": "Top-Level Packages",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "compiler", "type": "directory" },
+            { "path": "vscode-extension", "type": "directory" },
+            { "path": "website", "type": "directory" },
+            { "path": "webcompiler", "type": "directory" },
+            { "path": "homebrew-package", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-2-compiler-entry",
+      "title": "Compiler Entry Point",
+      "description": "The Osprey CLI entry point wires up the full pipeline: parse the source, build an AST, infer types, emit LLVM IR, then either JIT or produce a binary. A top-level build script orchestrates build, test, and install.",
+      "estimatedTime": 90,
+      "focusDirectory": "compiler",
+      "highlightLayers": [
+        {
+          "id": "entry-and-build",
+          "name": "Entry & Build",
+          "color": "#10b981",
+          "items": [
+            { "path": "compiler/cmd", "type": "directory" },
+            { "path": "compiler/Makefile", "type": "file" },
+            { "path": "compiler/go.mod", "type": "file" }
+          ],
+          "opacity": 0.75,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-3-grammar-and-parser",
+      "title": "Grammar & Parser",
+      "description": "Osprey's syntax is defined by an ANTLR4 grammar. Generated parser sources sit alongside the grammar, and grammar changes flow through a dedicated regeneration step before the rest of the pipeline sees them.",
+      "estimatedTime": 90,
+      "focusDirectory": "compiler",
+      "highlightLayers": [
+        {
+          "id": "frontend-grammar",
+          "name": "Grammar & Generated Parser",
+          "color": "#a855f7",
+          "items": [
+            { "path": "compiler/osprey.g4", "type": "file" },
+            { "path": "compiler/parser", "type": "directory" },
+            { "path": "compiler/spec", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-4-ast-builders",
+      "title": "AST Construction",
+      "description": "This stage converts parse trees into a typed AST. Builders are split by language construct — literals, calls, match expressions, fibers, interpolation, and statements — and a dedicated validation pass enforces structural rules before anything reaches codegen.",
+      "estimatedTime": 120,
+      "focusDirectory": "compiler/internal/ast",
+      "highlightLayers": [
+        {
+          "id": "ast-core",
+          "name": "AST Core & Validation",
+          "color": "#f59e0b",
+          "items": [
+            { "path": "compiler/internal/ast/ast.go", "type": "file" },
+            { "path": "compiler/internal/ast/validation.go", "type": "file" },
+            { "path": "compiler/internal/ast/builder_core.go", "type": "file" }
+          ],
+          "opacity": 0.75,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "ast-builders",
+          "name": "Construct Builders",
+          "color": "#ec4899",
+          "items": [
+            { "path": "compiler/internal/ast/builder_match.go", "type": "file" },
+            { "path": "compiler/internal/ast/builder_fibers.go", "type": "file" },
+            { "path": "compiler/internal/ast/builder_interpolation.go", "type": "file" },
+            { "path": "compiler/internal/ast/builder_calls.go", "type": "file" }
+          ],
+          "opacity": 0.65,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-5-type-system-and-codegen",
+      "title": "Type Inference & LLVM Codegen",
+      "description": "Codegen is the heart of the compiler. Hindley-Milner inference resolves types, a core generator emits LLVM IR, and feature-specific modules cover effects, fibers, HTTP, iterators, and pattern matching. A dedicated pass enforces exhaustiveness for match expressions.",
+      "estimatedTime": 180,
+      "focusDirectory": "compiler/internal/codegen",
+      "highlightLayers": [
+        {
+          "id": "type-system",
+          "name": "Type System",
+          "color": "#ef4444",
+          "items": [
+            { "path": "compiler/internal/codegen/type_inference.go", "type": "file" },
+            { "path": "compiler/internal/codegen/match_validation.go", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "codegen-core",
+          "name": "LLVM Codegen Core",
+          "color": "#0ea5e9",
+          "items": [
+            { "path": "compiler/internal/codegen/generator.go", "type": "file" },
+            { "path": "compiler/internal/codegen/llvm.go", "type": "file" },
+            { "path": "compiler/internal/codegen/compilation.go", "type": "file" },
+            { "path": "compiler/internal/codegen/jit_executor.go", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "feature-generation",
+          "name": "Feature Generation",
+          "color": "#14b8a6",
+          "items": [
+            { "path": "compiler/internal/codegen/effects_generation.go", "type": "file" },
+            { "path": "compiler/internal/codegen/fiber_generation.go", "type": "file" },
+            { "path": "compiler/internal/codegen/iterator_generation.go", "type": "file" },
+            { "path": "compiler/internal/codegen/http_generation.go", "type": "file" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes",
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Open the Hindley-Milner type inference implementation",
+          "target": "compiler/internal/codegen/type_inference.go"
+        }
+      ]
+    },
+    {
+      "id": "step-6-c-runtime",
+      "title": "C Runtime (Fibers, HTTP, WebSockets)",
+      "description": "The performance-critical runtime is written in C with security hardening flags. A fiber layer powers lightweight concurrency, HTTP and WebSocket modules provide networking, and a system layer handles OS interactions. Compiled LLVM IR links against these libraries.",
+      "estimatedTime": 150,
+      "focusDirectory": "compiler/runtime",
+      "highlightLayers": [
+        {
+          "id": "fiber-core",
+          "name": "Fiber Runtime",
+          "color": "#f97316",
+          "items": [
+            { "path": "compiler/runtime/fiber_runtime.c", "type": "file" },
+            { "path": "compiler/runtime/fiber_runtime_tests.c", "type": "file" }
+          ],
+          "opacity": 0.75,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "networking",
+          "name": "HTTP & WebSockets",
+          "color": "#8b5cf6",
+          "items": [
+            { "path": "compiler/runtime/http_client_runtime.c", "type": "file" },
+            { "path": "compiler/runtime/http_server_runtime.c", "type": "file" },
+            { "path": "compiler/runtime/websocket_client_runtime.c", "type": "file" },
+            { "path": "compiler/runtime/websocket_server_runtime.c", "type": "file" }
+          ],
+          "opacity": 0.65,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-7-examples-and-tests",
+      "title": "Examples & Tests",
+      "description": "Runnable examples carry expected outputs, and a companion set pins error messages for negative cases. Integration tests exercise the full pipeline while unit tests target individual components. This is where new language features gain their coverage.",
+      "estimatedTime": 120,
+      "focusDirectory": "compiler",
+      "highlightLayers": [
+        {
+          "id": "examples",
+          "name": "Example Programs",
+          "color": "#22c55e",
+          "items": [
+            { "path": "compiler/examples/tested", "type": "directory" },
+            { "path": "compiler/examples/failscompilation", "type": "directory" },
+            { "path": "compiler/examples/api", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "test-suites",
+          "name": "Test Suites",
+          "color": "#eab308",
+          "items": [
+            { "path": "compiler/tests/integration", "type": "directory" },
+            { "path": "compiler/tests/unit", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-8-recent-activity",
+      "title": "Recent Activity",
+      "description": "Switch to git color mode to see files that have changed recently. Osprey ships rapid iterations; this view helps spot which subsystems are in active flux so you can align new work with current direction.",
+      "estimatedTime": 60,
+      "focusDirectory": "compiler",
+      "colorMode": "git"
+    },
+    {
+      "id": "step-9-wrap-up",
+      "title": "Where to Go Next",
+      "description": "You've seen the full pipeline: grammar, AST, type system, LLVM IR, and the C runtime, plus the test and example surfaces. Start with the project conventions doc, then pick a tested example that matches a feature you want to explore and trace it through codegen.",
+      "estimatedTime": 45,
+      "focusDirectory": "",
+      "highlightLayers": [
+        {
+          "id": "top-level-packages",
+          "name": "Top-Level Packages",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "compiler", "type": "directory" },
+            { "path": "vscode-extension", "type": "directory" },
+            { "path": "website", "type": "directory" },
+            { "path": "webcompiler", "type": "directory" },
+            { "path": "homebrew-package", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
+    }
+  ],
+  "metadata": {
+    "author": "Osprey Team",
+    "createdAt": "2026-04-17T00:00:00.000Z",
+    "tags": [
+      "onboarding",
+      "compiler",
+      "llvm",
+      "functional-programming",
+      "algebraic-effects"
+    ]
+  }
+}
