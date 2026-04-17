@@ -218,12 +218,44 @@
       "colorMode": "fileTypes"
     },
     {
-      "id": "step-8-recent-activity",
-      "title": "Recent Activity",
-      "description": "Switch to git color mode to see files that have changed recently. Osprey ships rapid iterations; this view helps spot which subsystems are in active flux so you can align new work with current direction.",
+      "id": "step-8-active-subsystems",
+      "title": "Where Work Happens",
+      "description": "Three subsystems see the bulk of active development: codegen, where new language features land; the runtime, where performance and concurrency evolve; and examples, where coverage proves features work. New contributions usually touch at least one of these three.",
       "estimatedTime": 60,
       "focusDirectory": "compiler",
-      "colorMode": "git"
+      "highlightLayers": [
+        {
+          "id": "active-codegen",
+          "name": "Codegen",
+          "color": "#0ea5e9",
+          "items": [
+            { "path": "compiler/internal/codegen", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "active-runtime",
+          "name": "Runtime",
+          "color": "#f97316",
+          "items": [
+            { "path": "compiler/runtime", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "active-examples",
+          "name": "Examples",
+          "color": "#22c55e",
+          "items": [
+            { "path": "compiler/examples", "type": "directory" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "border"
+        }
+      ],
+      "colorMode": "fileTypes"
     },
     {
       "id": "step-9-wrap-up",
