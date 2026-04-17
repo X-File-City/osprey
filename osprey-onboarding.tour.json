@@ -15,22 +15,6 @@
       "description": "Osprey is a multi-package monorepo. The core compiler sits alongside surrounding tooling for editor support, documentation, browser-based compilation, and distribution.",
       "estimatedTime": 60,
       "focusDirectory": "",
-      "highlightLayers": [
-        {
-          "id": "top-level-packages",
-          "name": "Top-Level Packages",
-          "color": "#3b82f6",
-          "items": [
-            { "path": "compiler", "type": "directory" },
-            { "path": "vscode-extension", "type": "directory" },
-            { "path": "website", "type": "directory" },
-            { "path": "webcompiler", "type": "directory" },
-            { "path": "homebrew-package", "type": "directory" }
-          ],
-          "opacity": 0.7,
-          "renderStrategy": "border"
-        }
-      ],
       "colorMode": "fileTypes"
     },
     {
@@ -247,22 +231,6 @@
       "description": "You've seen the full pipeline: grammar, AST, type system, LLVM IR, and the C runtime, plus the test and example surfaces. Start with the project conventions doc, then pick a tested example that matches a feature you want to explore and trace it through codegen.",
       "estimatedTime": 45,
       "focusDirectory": "",
-      "highlightLayers": [
-        {
-          "id": "top-level-packages",
-          "name": "Top-Level Packages",
-          "color": "#3b82f6",
-          "items": [
-            { "path": "compiler", "type": "directory" },
-            { "path": "vscode-extension", "type": "directory" },
-            { "path": "website", "type": "directory" },
-            { "path": "webcompiler", "type": "directory" },
-            { "path": "homebrew-package", "type": "directory" }
-          ],
-          "opacity": 0.7,
-          "renderStrategy": "border"
-        }
-      ],
       "colorMode": "fileTypes"
     }
   ],
