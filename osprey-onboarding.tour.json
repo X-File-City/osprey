@@ -216,7 +216,7 @@
     {
       "id": "step-8-active-subsystems",
       "title": "Where Work Happens",
-      "description": "Three subsystems see the bulk of active development: codegen, where new language features land; the runtime, where performance and concurrency evolve; and examples, where coverage proves features work. New contributions usually touch at least one of these three.",
+      "description": "Most active development happens in three subsystems. Code generation is where new language features land. The runtime layer is where performance and concurrency evolve. Examples are where coverage proves features actually work. New contributions usually touch at least one of these three.",
       "estimatedTime": 60,
       "focusDirectory": "compiler",
       "highlightLayers": [
